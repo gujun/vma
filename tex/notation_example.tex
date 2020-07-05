@@ -5,12 +5,13 @@
 \input{settings.tex}
 
 \documentclass[11pt,oneside,a4paper]{book}
+\usepackage{CJKutf8}
 \usepackage{natbib}
 \usepackage{breakcites} % Do Not let citations break out of the text frame
 \usepackage{microtype} % Get rid of some frame busts automatically
 % Note: if microtype causes error on ubuntu, run
 % sudo apt-get install cm-super
-\title{Example Notation for Deep Learning}
+\title{Example Notation for Deep Learning 中文}
 \author{Ian Goodfellow\\Yoshua Bengio\\Aaron Courville}
 \date{}
 \setcounter{tocdepth}{1}
@@ -118,7 +119,7 @@ plainpages=false]{hyperref}
 \allowdisplaybreaks
 
 \begin{document}
-
+\begin{CJK}{UTF8}{gbsn}
 \setlength{\parskip}{0.25 \baselineskip}
 \newlength{\figwidth}
 \setlength{\figwidth}{26pc}
@@ -151,5 +152,5 @@ plainpages=false]{hyperref}
 \typeout{END_CHAPTER "index-" \theabspage}
 %\newpage
 
-
+\end{CJK}
 \end{document}
