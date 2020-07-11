@@ -5,7 +5,7 @@
     - I need documents for our work, but I hate writing documents.
     - It is aasy to read, but harder to write.
     - Reading is getting knowledge structure from others, but writing is forming your own knowledge structure.
-        -- Boring writing leads to boring reading.
+        - Boring writing leads to boring reading.
 
     - Here is some tools to make your writing more of structure.
 
@@ -16,5 +16,20 @@
 
 - https://www.sohu.com/a/404055976_120409334
     - Wang XiaoBo, a legendary writer , and a legendary programer
+
+- https://zhuanlan.zhihu.com/p/68752620
+    - There are many on line education platform
+
+- https://blog.csdn.net/zywhehe/article/details/83113214
+    - Texlive
+    - texstudio
+- http://blog.sina.com.cn/s/blog_54f7c72c0100mkfn.html
+    - protex based on MikText
+        - protex includes all modules such as MiKTex, Ghostscript, Gsviewer etc.
+        - but protex not update in time.
+
+- http://www.ctex.org/HomePage
+    - CTEX 
+        
 
 
