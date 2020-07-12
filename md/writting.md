@@ -29,7 +29,24 @@
         - but protex not update in time.
 
 - http://www.ctex.org/HomePage
-    - CTEX 
-        
+    - CTEX
 
+- https://www.cnblogs.com/dezheng/p/3874434.html
+    - 3 methods to use utf-8 in Latex
+
+- Modify tex latex ctex fontset ctex-fontset-windowsnew.def to make XeLatex compile successfully
+    - loloca position C:\Tools\MiKTeX29\tex\latex\ctex\fontset
+    - pdflatex also compiles with errors
+    - https://blog.csdn.net/weixin_42268975/article/details/89084155
+    - https://blog.csdn.net/maoye/article/details/102691774
+    - https://huxuan.org/2012/07/14/chinese-font-problem-of-ctex-in-texlive-under-linux/
+    - https://github.com/ustctug/ustcthesis/issues/184
+    - https://fontzone.net/
+        
+- https://blog.csdn.net/zywhehe/article/details/83113214
+    - Install texlive & texStudio
+
+## pdflatex vs XeLatex
+- common
+- difference
 
