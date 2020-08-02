@@ -42,11 +42,30 @@
     - https://huxuan.org/2012/07/14/chinese-font-problem-of-ctex-in-texlive-under-linux/
     - https://github.com/ustctug/ustcthesis/issues/184
     - https://fontzone.net/
-        
+    
 - https://blog.csdn.net/zywhehe/article/details/83113214
     - Install texlive & texStudio
 
 ## pdflatex vs XeLatex
 - common
+
 - difference
+
+##  Markdown
+1. [Runoob Markdown Class](https://www.runoob.com/markdown/md-advance.html)
+	
+	- Brief Intruduction
+2. [Typora introduction in zhihu ](https://zhuanlan.zhihu.com/p/44998516)
+	>Typora 作为一款离线Markdown无疑是非常棒的， 但如果作为笔记工具的话，就有些差强人意了， 我曾经尝试使用Typora+Github来做笔记， 但是体验很差。
+如果你是用来做笔记管理的话， 推荐你使用 cmd Markdown， 支持发布，可在线查看， 是我用过最好的笔记产品
+	
+3. [Typora introduction 2](https://zhuanlan.zhihu.com/p/143669638)
+4. [Typora & Vscode](https://zhuanlan.zhihu.com/p/103348449)
+	
+	>Typora，极简主义，所见即所得。但是上传到笔记和博客都需要到处复制粘贴，还要经常修改格式，但vscode编写markdown很好地避免了这个问题。二者可以互相取长补短，这也是我力推这两个的原因。
+5. [Mardown for Writer](https://www.jianshu.com/p/q81RER)
+	
+	- Why is Markdown
+6. 
+
 
