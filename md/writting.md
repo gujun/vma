@@ -35,7 +35,7 @@
     - 3 methods to use utf-8 in Latex
 
 - Modify tex latex ctex fontset ctex-fontset-windowsnew.def to make XeLatex compile successfully
-    - loloca position C:\Tools\MiKTeX29\tex\latex\ctex\fontset
+    - loloca position C:\Tools\MiKTeX29\tex\latex\ctex\fontset, and my homepc need not to change
     - pdflatex also compiles with errors
     - https://blog.csdn.net/weixin_42268975/article/details/89084155
     - https://blog.csdn.net/maoye/article/details/102691774
