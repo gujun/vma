@@ -1,6 +1,17 @@
-# Documents
+<h1> Writing Documents </h1>
+<!-- TOC -->
 
-## Something about writing
+- [1. Something about writing](#1-something-about-writing)
+- [2. pdflatex vs XeLatex](#2-pdflatex-vs-xelatex)
+- [3. Markdown](#3-markdown)
+    - [3.1. Markdownn reference](#31-markdownn-reference)
+    - [3.2. vscode extension](#32-vscode-extension)
+- [4. Graphviz](#4-graphviz)
+
+<!-- /TOC -->
+
+# 1. Something about writing
+<a id="markdown-something-about-writing" name="something-about-writing"></a>
  - https://time.geekbang.org/column/article/132772
     - I need documents for our work, but I hate writing documents.
     - It is aasy to read, but harder to write.
@@ -46,12 +57,17 @@
 - https://blog.csdn.net/zywhehe/article/details/83113214
     - Install texlive & texStudio
 
-## pdflatex vs XeLatex
+# 2. pdflatex vs XeLatex
+<a id="markdown-pdflatex-vs-xelatex" name="pdflatex-vs-xelatex"></a>
 - common
 
 - difference
 
-##  Markdown
+# 3. Markdown
+<a id="markdown-markdown" name="markdown"></a>
+
+## 3.1. Markdownn reference
+<a id="markdown-markdownn-reference" name="markdownn-reference"></a>
 1. [Runoob Markdown Class](https://www.runoob.com/markdown/md-advance.html)
 	
 	- Brief Intruduction
@@ -67,5 +83,17 @@
 	
 	- Why is Markdown
 6. 
+
+## 3.2. vscode extension
+<a id="markdown-vscode-extension" name="vscode-extension"></a>
+- Auto Markdown TOC v3.0.12, Hunter Tran
+- Markdown Preview Enhanced v0.5.13, Yiyi Wang
+
+# Graphviz
+<a id="markdown-graphviz" name="graphviz"></a>
+- https://www.graphviz.org/documentation/
+- https://www.graphviz.org/doc/info/attrs.html
+- http://www.graphviz.org/pdf/dotguide.pdf
+
 
 
