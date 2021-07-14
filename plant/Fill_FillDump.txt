@@ -1,0 +1,147 @@
+@startuml
+
+Idle: All output signals are off
+
+Pause: Pause feeding
+Pause: [OUT] Pause
+
+Error: Critical Error.
+Error: System is paused.
+Error: [OUT] Application Alarm
+Error: [OUT] SMART5 red
+Error: [OUT] Pause
+
+state Execute {
+
+Run: [OUT] Run
+Run: [PAR] Target source
+
+state "Auto tare" as AutoTare
+AutoTare: Tare if load within
+AutoTare: min/max
+AutoTare: [PAR] Container tare min.
+AutoTare: [PAR] Container tare max.
+
+Feeding: [OUT] Coarse feed
+Feeding: [OUT] Fast feed
+Feeding: [OUT] Feed
+Feeding: [PAR] Target
+Feeding: [PAR] Spill; Feed; Fast feed
+Feeding: [PAR] Inhibit time
+
+Spill: We are in spill as long as the
+Spill: weight is unstable. Once the
+Spill: weight is stable, spill step is done
+Spill: [OUT] Spill
+Spill: [PAR] <w:blue>Stable timeout</w>
+
+state "Tolerance check" as ToleranceCheck
+ToleranceCheck: Check tolerance, weight stability
+ToleranceCheck: is ignored
+ToleranceCheck: [OUT] In tolerance
+ToleranceCheck: [OUT] Over +tol
+ToleranceCheck: [OUT] Under -tol
+ToleranceCheck: [PAR] +Tolerance
+ToleranceCheck: [PAR] -Tolerance
+
+state Dump {
+
+state "Dump (Heel weight) " as DumpWeight
+DumpWeight: Trigger dump and wait until
+DumpWeight: weight drop below configured
+DumpWeight: heel weight.
+DumpWeight: [OUT] Dump
+DumpWeight: [PAR] Heel weight
+
+state "Dump (Time) " as DumpTime
+DumpTime: Trigger dump and wait for a
+DumpTime: configured amount of time.
+DumpTime: If dump time was not sufficient,
+DumpTime: zero check failure in the
+DumpTime: beginning of the nexe cycle
+DumpTime: would be trigger.
+DumpTime: [OUT] Dump
+DumpTime: [PAR] Time
+
+}
+
+Complete: Tolerance output signal are
+Complete: retained until the start/reset
+Complete: signal
+Complete: [OUT] In tolerance
+Complete: [OUT] Over +tol
+Complete: [OUT] Under -tol
+Complete: [OUT] Complete
+
+state "Auto clear tare" as AutoClearTare
+AutoClearTare: Clear tare value if tare
+AutoClearTare: has been set
+AutoClearTare: [PAR] Target source
+
+state "Process timeout" as processTimeout
+processTimeout: [OUT] SMART5 yellow alarm
+processTimeout: <<Filling not successful>>
+processTimeout: [PAR] Process timeout
+
+note top of processTimeout: Start to complete
+
+state "Control timeout" as ControlTimeout
+ControlTimeout: [OUT] SMART5 yellow alarm
+ControlTimeout: <<Weight not changed>>
+ControlTimeout: [PAR] Control timeout
+
+note bottom of ControlTimeout: Detect weight change
+
+note left of ToleranceCheck: On tolerance violation:\n\tAdd to statistics\n\tNo SMART5 alarm
+
+[*] -left-> Run
+
+Run --> Feeding: [PAR] Target source != net
+Run --> AutoTare: [PAR] Target source == net
+Run --> processTimeout: Start Timer
+
+AutoTare --> Feeding: AutoTare Complete
+AutoTare --> Error: AutoTare Error
+Feeding --> ControlTimeout: Start Timer
+
+Feeding --> Spill
+
+Spill --> ToleranceCheck: Weight stable == yes
+Spill --> ToleranceCheck: Stable timeout
+
+ToleranceCheck --> Complete : <u>Fill mode</u>
+ToleranceCheck --> Dump : <u>Fill / Dump mode</u>
+Dump --> Complete : Dump ending
+
+Complete --> AutoClearTare : [IN] Start
+Complete --> AutoClearTare : [IN] Reset
+
+AutoClearTare -left-> Run : Start
+AutoClearTare -right-> Idle : Reset
+
+processTimeout --> Error: Timeout
+ControlTimeout --> Error: Timeout
+
+}
+
+[*] -left-> Idle: FD application task start
+
+Idle --> Execute : [IN] Start
+
+Execute --> Idle: [IN] Abort
+Execute --> Pause: [IN] Pause
+Execute --> Error: Application Error
+
+Pause --> Idle: [IN] Abort
+Pause --> Execute: [IN] Start
+
+Error --> Execute: [IN] Start
+Error --> Idle: [IN] Abort
+
+note right of Execute
+<u>Work Mode <<Fill> & <<Fill / Dump>>></u>
+Target source setting:define if we are using gross weight
+or the net weight as input for the filling algorithm
+end note
+
+@enduml

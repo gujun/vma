@@ -1,0 +1,65 @@
+@startuml
+
+note "<u>Design Principle</u>\n \
+Close match to ISA-88 industry standard" as N0
+
+Idle: All output signals are off
+
+Execute: See detailed state diagrams
+
+Complete: Tolerance output signal are
+Complete: retained until the start/reset
+Complete: signal
+Complete: [OUT] Statistics: InTol, +tol, -tol
+Complete: [OUT] Complete
+
+Pause: Pause feeding
+Pause: [OUT] Pause
+
+Error: Critical Error.
+Error: System is paused.
+Error: [OUT] Application Alarm
+Error: [OUT] SMART5 red
+Error: [OUT] Pause
+
+[*] --> Idle: FD application task start
+
+Idle --> Execute : [IN] Start
+
+Execute --> Idle: [IN] Abort
+Execute --> Complete: Execute Complete
+Execute --> Pause: [IN] Pause
+Execute --> Error: Application Error
+
+Complete --> Idle: [IN] Reset
+Complete --> Execute: [IN] Start
+
+Pause --> Idle: [IN] Abort
+Pause --> Execute: [IN] Start
+
+Error --> Execute: [IN] Start
+Error --> Idle: [IN] Abort
+
+note " \
+<u>Naming conversion</u>\n \
+\t[IN] Input signal, all input signals are pulse\n \
+\t[OUT] Output signal\n \
+\t[PAR] Configuration parameter\n \
+<u>Input signal architecture</u>\n \
+\t - Start: transition to Execute state\n \
+\t - Pause: transition to Pause state\n \
+\t - Abort/Reset: transition to Idle state\n \
+" as N1
+
+note bottom of Error
+<u>Error State</u>
+System is paused(feeding stopped) and errors is indicated
+Customer has two choise(same as from pause):
+    1.Abort
+    2.Continue the filling
+Example use case:
+    Customer run out of material -> error.
+    Now customer did refill of material and can continue.
+end note
+
+@enduml

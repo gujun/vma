@@ -1,0 +1,135 @@
+@startuml
+
+Idle: All output signals are off
+
+Pause: Pause feeding
+Pause: [OUT] Pause
+
+Error: Critical Error.
+Error: System is paused.
+Error: [OUT] Application Alarm
+Error: [OUT] SMART5 red
+Error: [OUT] Pause
+
+state Execute {
+Run: [OUT] Run
+
+state "Check Material" as CheckMaterial
+CheckMaterial: Verify that there is enough
+CheckMaterial: material for next dosing cycle
+
+state "Mode?" as MaterialNotEnough
+
+state "Always auto tare" as AutoTare
+AutoTare: Dose & Refill / Dose mode
+
+Feeding: [OUT] Coarse feed
+Feeding: [OUT] Fast feed
+Feeding: [OUT] Feed
+Feeding: [PAR] Target
+Feeding: [PAR] Spill; Feed; Fast feed
+Feeding: [PAR] Inhibit time
+
+Refill: Refill source container up to
+Refill: "upper limit" if "lower limit" is
+Refill: reached
+Refill: [OUT] Refill
+Refill: [PAR] Upper limit
+Refill: [PAR] Lower limit
+
+Spill: We are in spill as long as the
+Spill: weight is unstable. Once the
+Spill: weight is stable, spill step is done
+Spill: [OUT] Spill
+Spill: [PAR] <w:blue>Stable timeout</w>
+
+state "Tolerance check" as ToleranceCheck
+ToleranceCheck: Check tolerance, weight stability
+ToleranceCheck: is ignored
+ToleranceCheck: [OUT] In tolerance
+ToleranceCheck: [OUT] Over +tol
+ToleranceCheck: [OUT] Under -tol
+ToleranceCheck: [PAR] +Tolerance
+ToleranceCheck: [PAR] -Tolerance
+
+Complete: Tolerance output signal are
+Complete: retained until the start/reset
+Complete: signal
+Complete: [OUT] In tolerance
+Complete: [OUT] Over +tol
+Complete: [OUT] Under -tol
+Complete: [OUT] Complete
+
+state "Always auto clear tare" as AutoClearTare
+AutoClearTare: Dose & Refill / Dose mode
+
+state "Process timeout" as processTimeout
+processTimeout: [OUT] SMART5 yellow alarm
+processTimeout: <<Filling not successful>>
+processTimeout: [PAR] Process timeout
+
+note top of processTimeout: Start to complete
+
+state "Control timeout" as ControlTimeout
+ControlTimeout: [OUT] SMART5 yellow alarm
+ControlTimeout: <<Weight not changed>>
+ControlTimeout: [PAR] Control timeout
+
+note bottom of ControlTimeout: Detect weight change
+
+note bottom of ToleranceCheck: On tolerance violation:\n\tAdd to statistics\n\tNo SMART5 alarm
+
+[*] -left-> Run
+
+Run --> CheckMaterial
+Run --> processTimeout: Start Timer
+
+CheckMaterial --> AutoTare: Enough
+CheckMaterial -> MaterialNotEnough: Not enough
+MaterialNotEnough --> Refill: <u>Refill / Dose mode</u>
+MaterialNotEnough --> Error: <u>Dose mode</u>
+
+Refill --> ControlTimeout: Start Timer
+Refill --> AutoTare
+
+AutoTare -right-> Feeding
+Feeding --> ControlTimeout: Start Timer
+
+Feeding --> Spill
+
+Spill --> ToleranceCheck: Weight stable == yes
+Spill --> ToleranceCheck: Stable timeout
+
+ToleranceCheck --> Complete
+
+Complete --> AutoClearTare : [IN] Start
+Complete --> AutoClearTare : [IN] Reset
+
+AutoClearTare -left-> Run : Start
+AutoClearTare -right-> Idle : Reset
+
+processTimeout --> Error: Timeout
+ControlTimeout --> Error: Timeout
+
+}
+
+[*] -left-> Idle: FD application task start
+
+Idle --> Execute : [IN] Start
+
+Execute --> Idle: [IN] Abort
+Execute --> Pause: [IN] Pause
+Execute --> Error: Application Error
+
+Pause --> Idle: [IN] Abort
+Pause --> Execute: [IN] Start
+
+Error --> Execute: [IN] Start
+Error --> Idle: [IN] Abort
+
+note right of Execute
+<u>Work Mode <<Dose>> & <<Refill / Dose>> </u>
+Refill only avaiable in mode <<Refill / Dose>>
+end note
+
+@enduml
